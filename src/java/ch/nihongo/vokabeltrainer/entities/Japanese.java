@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Japanese.findByKana", query = "SELECT j FROM Japanese j WHERE j.kana = :kana"),
     @NamedQuery(name = "Japanese.findByRomaji", query = "SELECT j FROM Japanese j WHERE j.romaji = :romaji"),
     @NamedQuery(name = "Japanese.findBySentence", query = "SELECT j FROM Japanese j WHERE j.sentence = :sentence"),
-    @NamedQuery(name = "Japanese.findByJlpt", query = "SELECT j FROM Japanese j WHERE j.jlpt = :jlpt")})
+    @NamedQuery(name = "Japanese.findByJlpt", query = "SELECT j FROM Japanese j WHERE j.jlpt = :jlpt"),
+    @NamedQuery(name = "Japanese.findByCategory", query = "SELECT j FROM Japanese j WHERE j.category = :category")})
 public class Japanese implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,6 +55,10 @@ public class Japanese implements Serializable {
     @Basic(optional = false)
     @Column(name = "jlpt")
     private int jlpt;
+    @Basic(optional = false)
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private Category category;
     @ManyToMany(mappedBy = "japaneseList")
     private List<German> germanList;
     @OneToMany(mappedBy = "japaneseId")
@@ -68,12 +75,13 @@ public class Japanese implements Serializable {
         this.id = id;
     }
 
-    public Japanese(Integer id, String kanji, String kana, String romaji, int jlpt) {
+    public Japanese(Integer id, String kanji, String kana, String romaji, int jlpt, Category category) {
         this.id = id;
         this.kanji = kanji;
         this.kana = kana;
         this.romaji = romaji;
         this.jlpt = jlpt;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -122,6 +130,14 @@ public class Japanese implements Serializable {
 
     public void setJlpt(int jlpt) {
         this.jlpt = jlpt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @XmlTransient
@@ -182,7 +198,7 @@ public class Japanese implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.nihongo.vokabeltrainer.model.Japanese[ id=" + id + " ]";
+        return "gg.Japanese[ id=" + id + " ]";
     }
     
 }

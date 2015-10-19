@@ -102,7 +102,7 @@ public class Notknown implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.nihongo.vokabeltrainer.model.Notknown[ id=" + id + " ]";
+        return "gg.Notknown[ id=" + id + " ]";
     }
     
 }

@@ -102,7 +102,7 @@ public class Wrong implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.nihongo.vokabeltrainer.model.Wrong[ id=" + id + " ]";
+        return "gg.Wrong[ id=" + id + " ]";
     }
     
 }

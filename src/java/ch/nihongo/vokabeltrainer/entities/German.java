@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "German.findAll", query = "SELECT g FROM German g"),
     @NamedQuery(name = "German.findById", query = "SELECT g FROM German g WHERE g.id = :id"),
     @NamedQuery(name = "German.findByWord", query = "SELECT g FROM German g WHERE g.word = :word"),
-    @NamedQuery(name = "German.findBySentence", query = "SELECT g FROM German g WHERE g.sentence = :sentence")})
+    @NamedQuery(name = "German.findBySentence", query = "SELECT g FROM German g WHERE g.sentence = :sentence"),
+    @NamedQuery(name = "German.findByCategory", query = "SELECT g FROM German g WHERE g.category = :category")})
 public class German implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,6 +45,10 @@ public class German implements Serializable {
     private String word;
     @Column(name = "sentence")
     private String sentence;
+    @Basic(optional = false)
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
+    private Category category;
     @JoinTable(name = "translation", joinColumns = {
         @JoinColumn(name = "german_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "japanese_id", referencedColumnName = "id")})
@@ -61,9 +68,10 @@ public class German implements Serializable {
         this.id = id;
     }
 
-    public German(Integer id, String word) {
+    public German(Integer id, String word, Category category) {
         this.id = id;
         this.word = word;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -88,6 +96,14 @@ public class German implements Serializable {
 
     public void setSentence(String sentence) {
         this.sentence = sentence;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @XmlTransient
@@ -148,7 +164,7 @@ public class German implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.nihongo.vokabeltrainer.model.German[ id=" + id + " ]";
+        return "gg.German[ id=" + id + " ]";
     }
     
 }
