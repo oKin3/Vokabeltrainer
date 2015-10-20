@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "German.findByCategory", query = "SELECT g FROM German g WHERE g.category = :category")})
 public class German implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String FIND_ALL = "German.findAll";
+    public static final String FIND_BY_CATEGORY = "German.findByCategory";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

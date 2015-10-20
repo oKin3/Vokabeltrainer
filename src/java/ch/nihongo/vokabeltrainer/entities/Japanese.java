@@ -36,6 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Japanese.findByCategory", query = "SELECT j FROM Japanese j WHERE j.category = :category")})
 public class Japanese implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String FIND_ALL = "Japanese.findAll";
+    public static final String FIND_BY_CATEGORY = "Japanese.findByCategory";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
