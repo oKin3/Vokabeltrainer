@@ -8,7 +8,9 @@ public enum Category {
 
     FRUIT("Fruit"),
     MEDICAL("Medical"),
+    FOOD("Food"),
     ANIMAL("Animal");
+    
     private String name;
 
     private Category(String name) {
