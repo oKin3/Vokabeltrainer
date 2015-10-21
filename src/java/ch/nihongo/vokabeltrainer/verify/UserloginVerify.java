@@ -1,16 +1,12 @@
 package ch.nihongo.vokabeltrainer.verify;
 
 import ch.nihongo.vokabeltrainer.beans.UserloginData;
-import ch.nihongo.vokabeltrainer.entities.Userlogin;
+import ch.nihongo.vokabeltrainer.facade.UserloginFacade;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import org.apache.commons.codec.digest.Crypt;
 
 /**
  *
@@ -21,11 +17,15 @@ import org.apache.commons.codec.digest.Crypt;
 public class UserloginVerify implements Serializable {
 
     private static final long serialVersionUID = 8603021942996924164L;
-    private static final String PERSISTENCE_UNIT_NAME = "VokabeltrainerPU";
-    private static EntityManagerFactory emf;
+    private UserloginFacade userloginFacade;
 
-    @ManagedProperty(value = "#{userloginData}") // Wird automatisch injiziert
+    @ManagedProperty(value = "#{userloginData}")
     private UserloginData data;
+    
+    @PostConstruct
+    public void init() {
+        userloginFacade = getUserloginFacade();
+    }
 
     public UserloginVerify() {
     }
@@ -33,54 +33,32 @@ public class UserloginVerify implements Serializable {
     public void setData(UserloginData data) {
         this.data = data;
     }
-    
+
     public boolean isPasswordConfirmationCorrect() {
         return data.getPassword().equals(data.getPasswordConfirmation());
     }
-    
+
     public boolean isUsernameNotExist() {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = emf.createEntityManager();
-        
-        // Take user information
-        TypedQuery<Userlogin> query = em.createNamedQuery("Userlogin.findByUsername",Userlogin.class);
-        query.setParameter("username", data.getUsername());
-        
-        return query.getResultList().isEmpty();
+        return userloginFacade.isUsernameNotExist(data.getUsername());
     }
-    
+
     public boolean isUsernameExist() {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = emf.createEntityManager();
-        
-        // Take user information
-        TypedQuery<Userlogin> query = em.createNamedQuery("Userlogin.findByUsername",Userlogin.class);
-        query.setParameter("username", data.getUsername());
-        
-        return !query.getResultList().isEmpty();
+        return !userloginFacade.isUsernameNotExist(data.getUsername());
     }
-    
+
     public boolean isEmailNotExist() {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = emf.createEntityManager();
-        
-        // Take user information
-        TypedQuery<Userlogin> query = em.createNamedQuery("Userlogin.findByEmail",Userlogin.class);
-        query.setParameter("email", data.getEmail());
-        
-        return query.getResultList().isEmpty();
+        return userloginFacade.isEmailNotExist(data.getEmail());
     }
-    
+
     public boolean isPasswordCorrect() {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = emf.createEntityManager();
-        
-        // Take user information
-        TypedQuery<Userlogin> query = em.createNamedQuery("Userlogin.findByUsername",Userlogin.class);
-        query.setParameter("username", data.getUsername());
-        Userlogin user = query.getSingleResult();
-        
-        return user.getPassword().equals(Crypt.crypt(data.getPassword(), user.getPassword()));
+        return userloginFacade.isPasswordCorrect(data.getUsername(), data.getPassword());
+    }
+
+    public UserloginFacade getUserloginFacade() {
+        if (userloginFacade == null) {
+            userloginFacade = new UserloginFacade();
+        }
+        return userloginFacade;
     }
 
 }
