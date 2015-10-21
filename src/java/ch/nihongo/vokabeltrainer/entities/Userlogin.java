@@ -32,6 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Userlogin.findByAdmin", query = "SELECT u FROM Userlogin u WHERE u.admin = :admin")})
 public class Userlogin implements Serializable {
     private static final long serialVersionUID = 1L;
+    public static final String FIND_BY_USERNAME = "Userlogin.findByUsername";
+    public static final String FIND_BY_EMAIL = "Userlogin.findByEmail";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
