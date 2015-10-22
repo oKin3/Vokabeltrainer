@@ -1,17 +1,15 @@
 package ch.nihongo.vokabeltrainer.beans;
 
-import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Niko Reichardt
  */
 @ManagedBean
-@SessionScoped
-public class UserloginData implements Serializable {
-    private static final long serialVersionUID = 3240667984184408862L;
+@RequestScoped
+public class UserloginData {
 
     private String username;
     private String email;
