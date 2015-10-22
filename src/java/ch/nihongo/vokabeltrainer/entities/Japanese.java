@@ -37,6 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Japanese implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String FIND_ALL = "Japanese.findAll";
+    public static final String FIND_KANJI = "Japanese.findByKanji";
+    public static final String FIND_KANA = "Japanese.findByKana";
+    public static final String FIND_ROMAJI = "Japanese.findByRomaji";
+    public static final String FIND_JLPT = "Japanese.findByJlpt";
     public static final String FIND_BY_CATEGORY = "Japanese.findByCategory";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
