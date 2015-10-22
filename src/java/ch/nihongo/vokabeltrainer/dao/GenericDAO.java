@@ -61,12 +61,13 @@ public abstract class GenericDAO<T> implements Serializable {
         em.flush();
     }
 
-    public void joinTransaction() {
-        createEntityManager();
-        em.joinTransaction();
-    }
+    // Only with JTA
+//    public void joinTransaction() {
+//        createEntityManager();
+//        em.joinTransaction();
+//    }
 
-    public void save(T entity) {
+    public void persist(T entity) {
         em.persist(entity);
     }
 
