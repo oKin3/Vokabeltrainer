@@ -23,4 +23,8 @@ public class JapaneseFacade {
 
         return result;
     }
+
+    public List<Japanese> findByCategory(String category) {
+        return japaneseDAO.findByCategory(category);
+    }
 }

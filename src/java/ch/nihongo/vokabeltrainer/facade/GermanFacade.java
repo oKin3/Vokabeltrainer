@@ -23,4 +23,8 @@ public class GermanFacade {
 
         return result;
     }
+
+    public List<German> findByCategory(String category) {
+        return germanDAO.findByCategory(category);
+    }
 }
