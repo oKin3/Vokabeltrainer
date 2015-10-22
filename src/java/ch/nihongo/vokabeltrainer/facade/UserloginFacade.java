@@ -10,7 +10,11 @@ import org.apache.commons.codec.digest.Crypt;
  */
 public class UserloginFacade {
 
-    private UserloginDAO userDAO = new UserloginDAO();
+    private UserloginDAO userDAO;
+
+    public UserloginFacade() {
+        userDAO = new UserloginDAO();
+    }
 
     public boolean isUsernameNotExist(String username) {
         userDAO.beginTransaction();
