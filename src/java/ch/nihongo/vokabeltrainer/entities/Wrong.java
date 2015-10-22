@@ -25,7 +25,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Wrong.findAll", query = "SELECT w FROM Wrong w"),
     @NamedQuery(name = "Wrong.findById", query = "SELECT w FROM Wrong w WHERE w.id = :id")})
 public class Wrong implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    public static final String FIND_BY_GERMAN_ID = "Wrong.findByUserIdAndGermanId";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -104,5 +106,5 @@ public class Wrong implements Serializable {
     public String toString() {
         return "gg.Wrong[ id=" + id + " ]";
     }
-    
+
 }
