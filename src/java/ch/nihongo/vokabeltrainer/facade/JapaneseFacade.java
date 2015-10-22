@@ -25,6 +25,9 @@ public class JapaneseFacade {
     }
 
     public List<Japanese> findByCategory(String category) {
-        return japaneseDAO.findByCategory(category);
+        japaneseDAO.createEntityManager();
+        List<Japanese> list = japaneseDAO.findByCategory(category);
+        japaneseDAO.closeEntityManager();
+        return list;
     }
 }

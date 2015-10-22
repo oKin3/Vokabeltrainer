@@ -25,6 +25,9 @@ public class GermanFacade {
     }
 
     public List<German> findByCategory(String category) {
-        return germanDAO.findByCategory(category);
+        germanDAO.createEntityManager();
+        List<German> list = germanDAO.findByCategory(category);
+        germanDAO.closeEntityManager();
+        return list;
     }
 }
