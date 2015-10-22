@@ -1,15 +1,13 @@
 package ch.nihongo.vokabeltrainer.beans;
 
 import ch.nihongo.vokabeltrainer.entities.Userlogin;
-import ch.nihongo.vokabeltrainer.model.UserloginVerify;
-import java.io.Serializable;
+import ch.nihongo.vokabeltrainer.facade.UserloginFacade;
+import ch.nihongo.vokabeltrainer.verify.UserloginVerify;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.Crypt;
 
@@ -18,18 +16,21 @@ import org.apache.commons.codec.digest.Crypt;
  * @author Niko Reichardt
  */
 @ManagedBean
-@SessionScoped
-public class UserloginManager implements Serializable {
+@RequestScoped
+public class UserloginManager {
 
-    private static final long serialVersionUID = 1153676756194853248L;
-    private static final String PERSISTENCE_UNIT_NAME = "VokabeltrainerPU";
-    private static EntityManagerFactory emf;
+    private UserloginFacade userloginFacade;
 
     @ManagedProperty(value = "#{userloginData}")
     private UserloginData data;
 
     @ManagedProperty(value = "#{userloginVerify}")
     private UserloginVerify verify;
+
+    @PostConstruct
+    public void init() {
+        userloginFacade = getUserloginFacade();
+    }
 
     public UserloginManager() {
     }
@@ -44,17 +45,9 @@ public class UserloginManager implements Serializable {
 
     public String createUser() {
         if (verify.isUsernameNotExist() && verify.isPasswordConfirmationCorrect() && verify.isEmailNotExist()) {
-
-            emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-            EntityManager em = emf.createEntityManager();
-
-            // Create new user
-            em.getTransaction().begin();
             Userlogin login = new Userlogin(data.getUsername(), Crypt.crypt(data.getPassword()), data.getEmail(), false);
-            em.persist(login);
-            em.getTransaction().commit();
-            em.close();
-            return "ok";
+            userloginFacade.createAccount(login);
+            return "account_created";
         } else {
             return "create_account";
         }
@@ -73,6 +66,13 @@ public class UserloginManager implements Serializable {
     public String logoutUser() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login.jsf?faces-redirect=true";
+    }
+
+    public UserloginFacade getUserloginFacade() {
+        if (userloginFacade == null) {
+            userloginFacade = new UserloginFacade();
+        }
+        return userloginFacade;
     }
 
 }
