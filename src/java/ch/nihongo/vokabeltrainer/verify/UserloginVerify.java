@@ -2,26 +2,26 @@ package ch.nihongo.vokabeltrainer.verify;
 
 import ch.nihongo.vokabeltrainer.beans.UserloginData;
 import ch.nihongo.vokabeltrainer.facade.UserloginFacade;
-import java.io.Serializable;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Niko Reichardt
  */
 @ManagedBean
-@SessionScoped
-public class UserloginVerify implements Serializable {
+@RequestScoped
+public class UserloginVerify {
 
-    private static final long serialVersionUID = 8603021942996924164L;
     private UserloginFacade userloginFacade;
 
     @ManagedProperty(value = "#{userloginData}")
     private UserloginData data;
-    
+
     @PostConstruct
     public void init() {
         userloginFacade = getUserloginFacade();
@@ -35,11 +35,19 @@ public class UserloginVerify implements Serializable {
     }
 
     public boolean isPasswordConfirmationCorrect() {
-        return data.getPassword().equals(data.getPasswordConfirmation());
+        if (data.getPassword().equals(data.getPasswordConfirmation())) {
+            return true;
+        }
+        FacesContext.getCurrentInstance().addMessage("create_account:passwordConfirmation", new FacesMessage("Error", "Password confirmation doesn't match"));
+        return false;
     }
 
     public boolean isUsernameNotExist() {
-        return userloginFacade.isUsernameNotExist(data.getUsername());
+        if (userloginFacade.isUsernameNotExist(data.getUsername())) {
+            return true;
+        } 
+        FacesContext.getCurrentInstance().addMessage("create_account:username", new FacesMessage("Error", "Username already exist"));
+        return false;
     }
 
     public boolean isUsernameExist() {
@@ -47,11 +55,19 @@ public class UserloginVerify implements Serializable {
     }
 
     public boolean isEmailNotExist() {
-        return userloginFacade.isEmailNotExist(data.getEmail());
+        if (userloginFacade.isEmailNotExist(data.getEmail())) {
+            return true;
+        }
+        FacesContext.getCurrentInstance().addMessage("create_account:email", new FacesMessage("Error", "E-Mail already exist"));
+        return false;
     }
 
     public boolean isPasswordCorrect() {
-        return userloginFacade.isPasswordCorrect(data.getUsername(), data.getPassword());
+        if (userloginFacade.isPasswordCorrect(data.getUsername(), data.getPassword())) {
+            return true;
+        }
+        FacesContext.getCurrentInstance().addMessage("login:password", new FacesMessage("Error", "Password is not correct"));
+        return false;
     }
 
     public UserloginFacade getUserloginFacade() {
