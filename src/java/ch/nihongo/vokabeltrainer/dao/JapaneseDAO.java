@@ -1,5 +1,6 @@
 package ch.nihongo.vokabeltrainer.dao;
 
+import ch.nihongo.vokabeltrainer.entities.Category;
 import ch.nihongo.vokabeltrainer.entities.Japanese;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,8 @@ public class JapaneseDAO extends GenericDAO<Japanese> {
     }
 
     public List<Japanese> findByCategory(String category) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("category", category);
+        Map<String, Category> parameters = new HashMap<>();
+        parameters.put("category", Category.valueOf(category));
 
         return super.findAllResults(Japanese.FIND_BY_CATEGORY, parameters);
     }

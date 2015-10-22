@@ -1,5 +1,6 @@
 package ch.nihongo.vokabeltrainer.dao;
 
+import ch.nihongo.vokabeltrainer.entities.Category;
 import ch.nihongo.vokabeltrainer.entities.German;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,8 @@ public class GermanDAO extends GenericDAO<German> {
     }
 
     public List<German> findByCategory(String category) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("category", category);
+        Map<String, Category> parameters = new HashMap<>();
+        parameters.put("category", Category.valueOf(category));
 
         return super.findAllResults(German.FIND_BY_CATEGORY, parameters);
     }
