@@ -69,8 +69,14 @@ public class LoginFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         if (allowedURIs == null) {
             allowedURIs = new ArrayList<>();
-            allowedURIs.add("/Vokabeltrainer/vt_test.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_vocable_test.jsf");
             allowedURIs.add("/Vokabeltrainer/vt_welcome.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_index.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_correct.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_wrong.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_vocable_add.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_vocable_created.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_vocable_settings.jsf");
         }
     }
 
