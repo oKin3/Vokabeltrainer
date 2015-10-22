@@ -15,6 +15,12 @@ public class UserloginFacade {
     public UserloginFacade() {
         userDAO = new UserloginDAO();
     }
+    
+    public void createAccount(Userlogin login) {
+        userDAO.beginTransaction();
+        userDAO.persist(login);
+        userDAO.commitAndCloseTransaction();
+    }
 
     public boolean isUsernameNotExist(String username) {
         userDAO.beginTransaction();
