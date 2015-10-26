@@ -21,7 +21,7 @@ public class TranslationFacade {
         japaneseDAO = new JapaneseDAO();
     }
 
-    public void createTranslation(Japanese japanese, German german) {
+    public boolean createTranslation(Japanese japanese, German german) {
         japaneseDAO.beginTransaction();
         germanDAO.beginTransaction();
         japaneseDAO.persist(japanese);
@@ -31,6 +31,7 @@ public class TranslationFacade {
         germanDAO.persist(german);
         japaneseDAO.commitAndCloseTransaction();
         germanDAO.commitAndCloseTransaction();
+        return true;
     }
 
 }
