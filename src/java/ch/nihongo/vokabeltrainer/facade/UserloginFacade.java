@@ -15,31 +15,38 @@ public class UserloginFacade {
     public UserloginFacade() {
         userDAO = new UserloginDAO();
     }
-    
+
     public void createAccount(Userlogin login) {
         userDAO.beginTransaction();
         userDAO.persist(login);
         userDAO.commitAndCloseTransaction();
     }
 
-    public boolean isUsernameNotExist(String username) {
-        userDAO.beginTransaction();
+    public Userlogin findByUsername(String username) {
+        userDAO.createEntityManager();
         Userlogin user = userDAO.findByUsername(username);
+        userDAO.closeEntityManager();
+        return user;
+    }
 
+    public boolean isUsernameNotExist(String username) {
+        userDAO.createEntityManager();
+        Userlogin user = userDAO.findByUsername(username);
+        userDAO.closeEntityManager();
         return user == null;
     }
 
     public boolean isEmailNotExist(String email) {
-        userDAO.beginTransaction();
+        userDAO.createEntityManager();
         Userlogin user = userDAO.findByEmail(email);
-
+        userDAO.closeEntityManager();
         return user == null;
     }
 
     public boolean isPasswordCorrect(String username, String password) {
-        userDAO.beginTransaction();
+        userDAO.createEntityManager();
         Userlogin user = userDAO.findByUsername(username);
-
+        userDAO.closeEntityManager();
         return user.getPassword().equals(Crypt.crypt(password, user.getPassword()));
     }
 }

@@ -45,7 +45,7 @@ public class UserloginManager {
 
     public String createUser() {
         if (verify.isUsernameNotExist() && verify.isPasswordConfirmationCorrect() && verify.isEmailNotExist()) {
-            Userlogin login = new Userlogin(data.getUsername(), Crypt.crypt(data.getPassword()), data.getEmail(), false);
+            Userlogin login = new Userlogin(data.getUser().getUsername(), Crypt.crypt(data.getUser().getPassword()), data.getUser().getEmail(), false);
             userloginFacade.createAccount(login);
             return "account_created";
         } else {
@@ -57,7 +57,7 @@ public class UserloginManager {
 
         if (verify.isUsernameExist() && verify.isPasswordCorrect()) {
             HttpSession session = SessionBean.getSession();
-            session.setAttribute("username", data.getUsername());
+            session.setAttribute("username", data.getUser().getUsername());
             return "vt_welcome";
         }
         return "login";
