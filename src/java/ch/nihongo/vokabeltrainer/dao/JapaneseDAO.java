@@ -29,28 +29,28 @@ public class JapaneseDAO extends GenericDAO<Japanese> {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("kanji", kanji);
 
-        return super.findOneResult(Japanese.FIND_KANJI, parameters);
+        return super.findOneResult(Japanese.FIND_BY_KANJI, parameters);
     }
 
     public Japanese findByKana(String kana) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("kana", kana);
 
-        return super.findOneResult(Japanese.FIND_KANA, parameters);
+        return super.findOneResult(Japanese.FIND_BY_KANA, parameters);
     }
 
     public Japanese findByRomaji(String romaji) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("romaji", romaji);
 
-        return super.findOneResult(Japanese.FIND_ROMAJI, parameters);
+        return super.findOneResult(Japanese.FIND_BY_ROMAJI, parameters);
     }
 
     public Japanese findByJLPT(String jlpt) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("jlpt", jlpt);
 
-        return super.findOneResult(Japanese.FIND_JLPT, parameters);
+        return super.findOneResult(Japanese.FIND_BY_JLPT, parameters);
     }
 
 }

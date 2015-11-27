@@ -24,6 +24,13 @@ public class GermanDAO extends GenericDAO<German> {
 
         return super.findAllResults(German.FIND_BY_CATEGORY, parameters);
     }
+    
+    public List<German> findByCategoryMax(String category, int max) {
+        Map<String, Category> parameters = new HashMap<>();
+        parameters.put("category", Category.valueOf(category));
+
+        return super.findMaxResults(German.FIND_BY_CATEGORY, parameters, max);
+    }
 
     public German findByWord(String word) {
         Map<String, Object> parameters = new HashMap<>();

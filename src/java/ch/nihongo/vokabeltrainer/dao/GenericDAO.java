@@ -139,6 +139,28 @@ public abstract class GenericDAO<T> implements Serializable {
 
         return result;
     }
+    
+    @SuppressWarnings("unchecked")
+    protected List findMaxResults(String namedQuery, Map parameters, int limit) {
+        List result = null;
+
+        try {
+            Query query = em.createNamedQuery(namedQuery);
+
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(query, parameters);
+            }
+
+            result = (List) query.setMaxResults(limit).getResultList();
+
+        } catch (NoResultException e) {
+            System.out.println("No result found for named query: " + namedQuery);
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+        }
+
+        return result;
+    }
 
     private void populateQueryParameters(Query query, Map<String, Object> parameters) {
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
