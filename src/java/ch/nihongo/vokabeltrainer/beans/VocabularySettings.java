@@ -4,7 +4,9 @@ import ch.nihongo.vokabeltrainer.entities.Category;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -20,29 +22,48 @@ public class VocabularySettings implements Serializable {
     private String language;
     private String mode;
     private String category;
-    private static Map<String, String> languageMap;
-    private static Map<String, String> modeMap;
-    private static Map<String, Category> categoryMap;
-    
+    private Map<String, String> languageMap;
+    private Map<String, String> modeMap;
+    private Map<String, Category> categoryMap;
+
     public static final String GERMAN = "german";
     public static final String JAPANESE = "japanese";
     public static final String RANDOM = "random";
     public static final String WRONG = "wrong";
 
-    static {
-        languageMap = new TreeMap<>();
-        languageMap.put("German", GERMAN);
-        languageMap.put("Japanese", JAPANESE);
-        modeMap = new TreeMap<>();
-        modeMap.put("Random", RANDOM);
-        modeMap.put("Only Wrong", WRONG);
-        categoryMap = new TreeMap<>();
-        for (Category categoryItem : Category.values()) {
-            categoryMap.put(categoryItem.getName(), categoryItem);
-        }
+    @ManagedProperty(value = "#{vocabularyStatistic}")
+    private VocabularyStatistic statistic;
+
+    @PostConstruct
+    public void init() {
+        createLanguageMap();
+        createCategoryMap();
     }
 
     public VocabularySettings() {
+    }
+
+    public void setStatistic(VocabularyStatistic statistic) {
+        this.statistic = statistic;
+    }
+
+    public void createLanguageMap() {
+        languageMap = new TreeMap<>();
+        languageMap.put("DE -> JP", GERMAN);
+        languageMap.put("JP -> DE", JAPANESE);
+    }
+
+    public void createModeMap() {
+        modeMap = new TreeMap<>();
+        modeMap.put("Random", RANDOM);
+        modeMap.put("Only Wrong", WRONG);
+    }
+
+    public void createCategoryMap() {
+        categoryMap = new TreeMap<>();
+        for (Category categoryItem : Category.values()) {
+            categoryMap.put(categoryItem.getName() + " " + statistic.getGermanWordSizeByCategory(categoryItem.getName()), categoryItem);
+        }
     }
 
     public Map<String, Category> getCategoryMap() {
@@ -80,8 +101,8 @@ public class VocabularySettings implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-    
-    public String addSettings(){
+
+    public String addSettings() {
         return "vt_vocable_test.jsf";
     }
 
