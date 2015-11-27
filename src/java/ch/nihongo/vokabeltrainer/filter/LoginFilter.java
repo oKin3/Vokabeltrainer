@@ -77,6 +77,7 @@ public class LoginFilter implements Filter {
             allowedURIs.add("/Vokabeltrainer/vt_vocable_add.jsf");
             allowedURIs.add("/Vokabeltrainer/vt_vocable_created.jsf");
             allowedURIs.add("/Vokabeltrainer/vt_vocable_settings.jsf");
+            allowedURIs.add("/Vokabeltrainer/vt_vocable_statistics.jsf");
         }
     }
 
