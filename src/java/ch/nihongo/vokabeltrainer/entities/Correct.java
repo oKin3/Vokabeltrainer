@@ -22,10 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "correct")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Correct.findAll", query = "SELECT c FROM Correct c"),
-    @NamedQuery(name = "Correct.findById", query = "SELECT c FROM Correct c WHERE c.id = :id")})
+    @NamedQuery(name = Correct.FIND_ALL, query = "SELECT c FROM Correct c"),
+    @NamedQuery(name = Correct.FIND_BY_ID, query = "SELECT c FROM Correct c WHERE c.id = :id"),
+    @NamedQuery(name = Correct.FIND_BY_GERMAN_ID_AND_USER_ID, query = "SELECT c FROM Correct c WHERE c.germanId = :germanId AND c.userId = :userId"),
+    @NamedQuery(name = Correct.FIND_BY_JAPANESE_ID_AND_USER_ID, query = "SELECT c FROM Correct c WHERE c.japaneseId = :japaneseId AND c.userId = :userId"),
+    @NamedQuery(name = Correct.FIND_ALL_GERMAN_BY_USER_ID, query = "SELECT c FROM Correct c WHERE c.userId = :userId AND c.germanId IS NOT NULL"),
+    @NamedQuery(name = Correct.FIND_ALL_JAPANESE_BY_USER_ID, query = "SELECT c FROM Correct c WHERE c.userId = :userId AND c.japaneseId IS NOT NULL")})
 public class Correct implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -376763124624343877L;
+    public static final String FIND_ALL = "Correct.findAll";
+    public static final String FIND_BY_ID = "Correct.findById";
+    public static final String FIND_BY_GERMAN_ID_AND_USER_ID = "Correct.findByGermanIdAndUserId";
+    public static final String FIND_BY_JAPANESE_ID_AND_USER_ID = "Correct.findByJapaneseIdAndUserId";
+    public static final String FIND_ALL_GERMAN_BY_USER_ID = "Correct.findAllGermanByUserId";
+    public static final String FIND_ALL_JAPANESE_BY_USER_ID = "Correct.findAllJapaneseByUserId";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -104,5 +115,5 @@ public class Correct implements Serializable {
     public String toString() {
         return "gg.Correct[ id=" + id + " ]";
     }
-    
+
 }

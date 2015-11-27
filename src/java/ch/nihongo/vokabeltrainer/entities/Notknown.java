@@ -22,10 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "notknown")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Notknown.findAll", query = "SELECT n FROM Notknown n"),
-    @NamedQuery(name = "Notknown.findById", query = "SELECT n FROM Notknown n WHERE n.id = :id")})
+    @NamedQuery(name = Notknown.FIND_ALL, query = "SELECT n FROM Notknown n"),
+    @NamedQuery(name = Notknown.FIND_BY_ID, query = "SELECT n FROM Notknown n WHERE n.id = :id"),
+    @NamedQuery(name = Notknown.FIND_BY_GERMAN_ID_AND_USER_ID, query = "SELECT n FROM Notknown n WHERE n.germanId = :germanId AND n.userId = :userId"),
+    @NamedQuery(name = Notknown.FIND_BY_JAPANESE_ID_AND_USER_ID, query = "SELECT n FROM Notknown n WHERE n.japaneseId = :japaneseId AND n.userId = :userId"),
+    @NamedQuery(name = Notknown.FIND_ALL_GERMAN_BY_USER_ID, query = "SELECT n FROM Notknown n WHERE n.userId = :userId AND n.germanId IS NOT NULL"),
+    @NamedQuery(name = Notknown.FIND_ALL_JAPANESE_BY_USER_ID, query = "SELECT n FROM Notknown n WHERE n.userId = :userId AND n.japaneseId IS NOT NULL")})
 public class Notknown implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -8696880500499417160L;
+    public static final String FIND_ALL = "Notknown.findAll";
+    public static final String FIND_BY_ID = "Notknown.findById";
+    public static final String FIND_BY_GERMAN_ID_AND_USER_ID = "Notknown.findByGermanIdAndUserId";
+    public static final String FIND_BY_JAPANESE_ID_AND_USER_ID = "Notknown.findByJapaneseIdAndUserId";
+    public static final String FIND_ALL_GERMAN_BY_USER_ID = "Notknown.findAllGermanByUserId";
+    public static final String FIND_ALL_JAPANESE_BY_USER_ID = "Notknown.findAllJapaneseByUserId";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -104,5 +115,5 @@ public class Notknown implements Serializable {
     public String toString() {
         return "gg.Notknown[ id=" + id + " ]";
     }
-    
+
 }

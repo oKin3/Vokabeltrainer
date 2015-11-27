@@ -26,21 +26,24 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "japanese")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Japanese.findAll", query = "SELECT j FROM Japanese j"),
+    @NamedQuery(name = Japanese.FIND_ALL, query = "SELECT j FROM Japanese j"),
     @NamedQuery(name = "Japanese.findById", query = "SELECT j FROM Japanese j WHERE j.id = :id"),
-    @NamedQuery(name = "Japanese.findByKanji", query = "SELECT j FROM Japanese j WHERE j.kanji = :kanji"),
-    @NamedQuery(name = "Japanese.findByKana", query = "SELECT j FROM Japanese j WHERE j.kana = :kana"),
-    @NamedQuery(name = "Japanese.findByRomaji", query = "SELECT j FROM Japanese j WHERE j.romaji = :romaji"),
-    @NamedQuery(name = "Japanese.findBySentence", query = "SELECT j FROM Japanese j WHERE j.sentence = :sentence"),
-    @NamedQuery(name = "Japanese.findByJlpt", query = "SELECT j FROM Japanese j WHERE j.jlpt = :jlpt"),
-    @NamedQuery(name = "Japanese.findByCategory", query = "SELECT j FROM Japanese j WHERE j.category = :category")})
+    @NamedQuery(name = Japanese.FIND_BY_KANJI, query = "SELECT j FROM Japanese j WHERE j.kanji = :kanji"),
+    @NamedQuery(name = Japanese.FIND_BY_KANA, query = "SELECT j FROM Japanese j WHERE j.kana = :kana"),
+    @NamedQuery(name = Japanese.FIND_BY_ROMAJI, query = "SELECT j FROM Japanese j WHERE j.romaji = :romaji"),
+    @NamedQuery(name = Japanese.FIND_BY_SENTENCE, query = "SELECT j FROM Japanese j WHERE j.sentence = :sentence"),
+    @NamedQuery(name = Japanese.FIND_BY_JLPT, query = "SELECT j FROM Japanese j WHERE j.jlpt = :jlpt"),
+    @NamedQuery(name = Japanese.FIND_BY_CATEGORY, query = "SELECT j FROM Japanese j WHERE j.category = :category")})
 public class Japanese implements Serializable {
+
     private static final long serialVersionUID = 1L;
     public static final String FIND_ALL = "Japanese.findAll";
-    public static final String FIND_KANJI = "Japanese.findByKanji";
-    public static final String FIND_KANA = "Japanese.findByKana";
-    public static final String FIND_ROMAJI = "Japanese.findByRomaji";
-    public static final String FIND_JLPT = "Japanese.findByJlpt";
+    public static final String FIND_BY_ID = "Japanese.findById";
+    public static final String FIND_BY_KANJI = "Japanese.findByKanji";
+    public static final String FIND_BY_KANA = "Japanese.findByKana";
+    public static final String FIND_BY_ROMAJI = "Japanese.findByRomaji";
+    public static final String FIND_BY_SENTENCE = "Japanese.findBySentence";
+    public static final String FIND_BY_JLPT = "Japanese.findByJlpt";
     public static final String FIND_BY_CATEGORY = "Japanese.findByCategory";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -206,5 +209,5 @@ public class Japanese implements Serializable {
     public String toString() {
         return "gg.Japanese[ id=" + id + " ]";
     }
-    
+
 }

@@ -24,16 +24,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "userlogin")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Userlogin.findAll", query = "SELECT u FROM Userlogin u"),
-    @NamedQuery(name = "Userlogin.findById", query = "SELECT u FROM Userlogin u WHERE u.id = :id"),
-    @NamedQuery(name = "Userlogin.findByUsername", query = "SELECT u FROM Userlogin u WHERE u.username = :username"),
-    @NamedQuery(name = "Userlogin.findByPassword", query = "SELECT u FROM Userlogin u WHERE u.password = :password"),
-    @NamedQuery(name = "Userlogin.findByEmail", query = "SELECT u FROM Userlogin u WHERE u.email = :email"),
-    @NamedQuery(name = "Userlogin.findByAdmin", query = "SELECT u FROM Userlogin u WHERE u.admin = :admin")})
+    @NamedQuery(name = Userlogin.FIND_ALL, query = "SELECT u FROM Userlogin u"),
+    @NamedQuery(name = Userlogin.FIND_BY_ID, query = "SELECT u FROM Userlogin u WHERE u.id = :id"),
+    @NamedQuery(name = Userlogin.FIND_BY_USERNAME, query = "SELECT u FROM Userlogin u WHERE u.username = :username"),
+    @NamedQuery(name = Userlogin.FIND_BY_EMAIL, query = "SELECT u FROM Userlogin u WHERE u.email = :email"),
+    @NamedQuery(name = Userlogin.FIND_BY_ADMIN, query = "SELECT u FROM Userlogin u WHERE u.admin = :admin")})
 public class Userlogin implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    public static final String FIND_ALL = "Userlogin.findAll";
+    public static final String FIND_BY_ID = "Userlogin.findById";
     public static final String FIND_BY_USERNAME = "Userlogin.findByUsername";
     public static final String FIND_BY_EMAIL = "Userlogin.findByEmail";
+    public static final String FIND_BY_ADMIN = "Userlogin.findByAdmin";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -163,5 +166,5 @@ public class Userlogin implements Serializable {
     public String toString() {
         return "gg.Userlogin[ id=" + id + " ]";
     }
-    
+
 }

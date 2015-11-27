@@ -28,15 +28,18 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "german")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "German.findAll", query = "SELECT g FROM German g"),
-    @NamedQuery(name = "German.findById", query = "SELECT g FROM German g WHERE g.id = :id"),
-    @NamedQuery(name = "German.findByWord", query = "SELECT g FROM German g WHERE g.word = :word"),
-    @NamedQuery(name = "German.findBySentence", query = "SELECT g FROM German g WHERE g.sentence = :sentence"),
-    @NamedQuery(name = "German.findByCategory", query = "SELECT g FROM German g WHERE g.category = :category")})
+    @NamedQuery(name = German.FIND_ALL, query = "SELECT g FROM German g"),
+    @NamedQuery(name = German.FIND_BY_ID, query = "SELECT g FROM German g WHERE g.id = :id"),
+    @NamedQuery(name = German.FIND_BY_WORD, query = "SELECT g FROM German g WHERE g.word = :word"),
+    @NamedQuery(name = German.FIND_BY_SENTENCE, query = "SELECT g FROM German g WHERE g.sentence = :sentence"),
+    @NamedQuery(name = German.FIND_BY_CATEGORY, query = "SELECT g FROM German g WHERE g.category = :category")})
 public class German implements Serializable {
+
     private static final long serialVersionUID = 1L;
     public static final String FIND_ALL = "German.findAll";
+    public static final String FIND_BY_ID = "German.findById";
     public static final String FIND_BY_WORD = "German.findByWord";
+    public static final String FIND_BY_SENTENCE = "German.findBySentence";
     public static final String FIND_BY_CATEGORY = "German.findByCategory";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -169,5 +172,5 @@ public class German implements Serializable {
     public String toString() {
         return "gg.German[ id=" + id + " ]";
     }
-    
+
 }

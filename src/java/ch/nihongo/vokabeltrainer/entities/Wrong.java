@@ -22,12 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "wrong")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Wrong.findAll", query = "SELECT w FROM Wrong w"),
-    @NamedQuery(name = "Wrong.findById", query = "SELECT w FROM Wrong w WHERE w.id = :id")})
+    @NamedQuery(name = Wrong.FIND_ALL, query = "SELECT w FROM Wrong w"),
+    @NamedQuery(name = Wrong.FIND_BY_ID, query = "SELECT w FROM Wrong w WHERE w.id = :id"),
+    @NamedQuery(name = Wrong.FIND_BY_GERMAN_ID_AND_USER_ID, query = "SELECT w FROM Wrong w WHERE w.germanId = :germanId AND w.userId = :userId"),
+    @NamedQuery(name = Wrong.FIND_BY_JAPANESE_ID_AND_USER_ID, query = "SELECT w FROM Wrong w WHERE w.japaneseId = :japaneseId AND w.userId = :userId"),
+    @NamedQuery(name = Wrong.FIND_ALL_GERMAN_BY_USER_ID, query = "SELECT w FROM Wrong w WHERE w.userId = :userId AND w.germanId IS NOT NULL"),
+    @NamedQuery(name = Wrong.FIND_ALL_JAPANESE_BY_USER_ID, query = "SELECT w FROM Wrong w WHERE w.userId = :userId AND w.japaneseId IS NOT NULL")})
 public class Wrong implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    public static final String FIND_BY_GERMAN_ID = "Wrong.findByUserIdAndGermanId";
+    private static final long serialVersionUID = 8723057724615899575L;
+    public static final String FIND_ALL = "Wrong.findAll";
+    public static final String FIND_BY_ID = "Wrong.findById";
+    public static final String FIND_BY_GERMAN_ID_AND_USER_ID = "Wrong.findByGermanIdAndUserId";
+    public static final String FIND_BY_JAPANESE_ID_AND_USER_ID = "Wrong.findByJapaneseIdAndUserId";
+    public static final String FIND_ALL_GERMAN_BY_USER_ID = "Wrong.findAllGermanByUserId";
+    public static final String FIND_ALL_JAPANESE_BY_USER_ID = "Wrong.findAllJapaneseByUserId";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
