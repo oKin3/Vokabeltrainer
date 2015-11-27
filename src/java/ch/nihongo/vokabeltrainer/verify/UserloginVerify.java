@@ -35,7 +35,7 @@ public class UserloginVerify {
     }
 
     public boolean isPasswordConfirmationCorrect() {
-        if (data.getPassword().equals(data.getPasswordConfirmation())) {
+        if (data.getUser().getPassword().equals(data.getUser().getPasswordConfirmation())) {
             return true;
         }
         FacesContext.getCurrentInstance().addMessage("create_account:passwordConfirmation", new FacesMessage("Error", "Password confirmation doesn't match"));
@@ -43,7 +43,7 @@ public class UserloginVerify {
     }
 
     public boolean isUsernameNotExist() {
-        if (userloginFacade.isUsernameNotExist(data.getUsername())) {
+        if (userloginFacade.isUsernameNotExist(data.getUser().getUsername())) {
             return true;
         } 
         FacesContext.getCurrentInstance().addMessage("create_account:username", new FacesMessage("Error", "Username already exist"));
@@ -51,11 +51,11 @@ public class UserloginVerify {
     }
 
     public boolean isUsernameExist() {
-        return !userloginFacade.isUsernameNotExist(data.getUsername());
+        return !userloginFacade.isUsernameNotExist(data.getUser().getUsername());
     }
 
     public boolean isEmailNotExist() {
-        if (userloginFacade.isEmailNotExist(data.getEmail())) {
+        if (userloginFacade.isEmailNotExist(data.getUser().getEmail())) {
             return true;
         }
         FacesContext.getCurrentInstance().addMessage("create_account:email", new FacesMessage("Error", "E-Mail already exist"));
@@ -63,7 +63,7 @@ public class UserloginVerify {
     }
 
     public boolean isPasswordCorrect() {
-        if (userloginFacade.isPasswordCorrect(data.getUsername(), data.getPassword())) {
+        if (userloginFacade.isPasswordCorrect(data.getUser().getUsername(), data.getUser().getPassword())) {
             return true;
         }
         FacesContext.getCurrentInstance().addMessage("login:password", new FacesMessage("Error", "Password is not correct"));
