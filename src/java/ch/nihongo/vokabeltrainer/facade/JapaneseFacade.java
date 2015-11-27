@@ -17,17 +17,24 @@ public class JapaneseFacade {
     }
 
     public List<Japanese> findAll() {
-        japaneseDAO.beginTransaction();
+        japaneseDAO.createEntityManager();
         List<Japanese> result = japaneseDAO.findAll();
-        japaneseDAO.closeTransaction();
+        japaneseDAO.closeEntityManager();
 
         return result;
     }
 
     public List<Japanese> findByCategory(String category) {
         japaneseDAO.createEntityManager();
-        List<Japanese> list = japaneseDAO.findByCategory(category);
+        List<Japanese> list = japaneseDAO.findByCategory(category.toUpperCase());
         japaneseDAO.closeEntityManager();
         return list;
+    }
+    
+    public Japanese findByKanji(String kanji) {
+        japaneseDAO.createEntityManager();
+        Japanese japanese = japaneseDAO.findByKanji(kanji);
+        japaneseDAO.closeEntityManager();
+        return japanese;
     }
 }
